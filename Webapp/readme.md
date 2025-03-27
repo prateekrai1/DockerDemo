@@ -54,3 +54,53 @@ docker compose up -d
 ```bash
 docker compose ps
 ```
+
+### Method 3:  Deploy with Docker swarm
+1. Create a Docker Swarm cluster
+
+```bash
+docker swarm init --advertise-addr <manager_ip>
+```
+2. Join as a worker in the cluster
+
+```bash
+docker swarm join --token <token> <manager_ip>:2377
+```
+3. Deploy the application
+```bash
+docker stack deploy -c docker-compose.yml webapp
+```
+4. Verify the deployment
+```bash
+docker stack ps webapp
+```
+5. List all Services
+```bash
+docker stack services webapp
+```
+
+### Method 4:  Deploy to Minikube
+1. Start Minikube
+```bash
+minikube start
+```
+
+2. Convert docker-compose.yaml using Kompose
+```bash
+kompose convert -f docker-compose.yml
+```
+
+3. Deploy on the minikube cluster
+```bash
+kubectl apply -f .
+```
+
+4. Verify the pods running
+```bash
+kubectl get pods
+```
+
+5. View the minikube dashboard
+```bash
+minikube dashboard
+```
